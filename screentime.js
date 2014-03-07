@@ -4,20 +4,23 @@
  * Copyright (c) 2014 Rob Flaherty (@robflaherty)
  * Licensed under the MIT and GPL licenses.
  */
-(function ( $, window, document, undefined ) {
+
+(function($, window, document) {
 
   var defaults = {
-    fields: ['#top', '#middle', '#bottom']
+    fields: [],
+    buffer: '25%'
   };
 
   $.screentime = function(options) {
     options = $.extend({}, defaults, options);
 
-    var looker = {};
     var counter = {};
-    var reporter = {};
-    var session;
     var cache = {};
+
+    /*
+     * Utilities
+     */
 
     /*
      * Throttle function borrowed from:
@@ -54,170 +57,81 @@
       };
     }
 
-function random() {
-  return Math.round(Math.random() * 2147483647);
-}
+    function random() {
+      return Math.round(Math.random() * 2147483647);
+    }
 
-function Viewport() {
-  var $window = $(window);
+    /*
+     * Constructors
+     */
 
-  this.top = $window.scrollTop();    
-  this.height = $window.height();
-  this.bottom = this.top + this.height;
-  this.width = $window.width();
-}
+    function Field(selector) {
+      this.selector = selector;
+      $elem = this.$elem = $(selector);
 
-function Session() {
-  var id, startdate;
-  if (!$.cookie('_onscreen_a')) {
-    id = random() + '';
-    starttime = +new Date;
-    $.cookie('_onscreen_a', id);
-    $.cookie('_onscreen_b', starttime);
+      this.top = $elem.offset().top;
+      this.height = $elem.height();
+      this.bottom = this.top + this.height;
+      this.width = $elem.width();
+    }
 
-  } else {
-    id = $.cookie('_onscreen_a');
-    starttime = $.cookie('_onscreen_b');
-  }
+    function Viewport() {
+      var $window = $(window);
 
-  this.site = location.host;
-  this.id = id;
-  this.starttime = starttime;
-}
-
-function Page() {
-  this.path = location.pathname;
-}
-
-function Ad(selector) {
-  $elem = this.$elem = $(selector);
-  this.selector = selector;
-  this.id = $elem.data('tally-id');
-
-  this.viewable = null;
-  this.previous = 0;
-  this.timer = 0;
-  this.top = $elem.offset().top;
-  this.height = $elem.height();
-  this.bottom = this.top + this.height;
-  this.width = $elem.width();
-}
-
-function adViewable(viewport, ad) {
-  var cond1 = (ad.top >= viewport.top && ad.top < viewport.bottom);
-  var cond2 = (ad.bottom > viewport.top && ad.bottom <= viewport.bottom);
-  var cond3 = (ad.height > viewport.height && ad.top <= viewport.top && ad.bottom >= viewport.bottom);
-
-  if ( cond1 || cond2 || cond3 ) {
-    return ad
-  }
-}
+      this.top = $window.scrollTop();
+      this.height = $window.height();
+      this.bottom = this.top + this.height;
+      this.width = $window.width();
+    }
 
 
-function checkViewport() {
+    /*
+     * Do Stuff
+     */
 
-  var viewport = new Viewport();
-  var now = new Date;
-  var capsule = {
-    id:   session.id,
-    site: session.site,
-    page: page.path,
-    starttime: session.starttime,
-    ads: []
-  };
+    function onScreen(viewport, field) {
+      var buffer = parseInt(options.buffer.replace('%', ''), 10);
+
+      var cond1 = (field.top >= viewport.top && field.top < viewport.bottom);
+      var cond2 = (field.bottom > viewport.top && field.bottom <= viewport.bottom);
+      var cond3 = (field.height > viewport.height && field.top <= viewport.top && field.bottom >= viewport.bottom);
+
+      return ( cond1 || cond2 || cond3 );
+    }
 
 
-  $.each(cache, function(key, val) {
+    function checkViewport() {
+      var viewport = new Viewport();
 
-    if (!adViewable(viewport, val)) {
+      $.each(cache, function(key, val) {
 
-      val.previous = 0;
-    
-    } else {
+        if (onScreen(viewport, val)) {
+          counter[key] += 1;
+        }
 
-      if (!val.previous) val.previous = now;
-      val.timer += now - val.previous;
-
-      capsule.ads.push({
-        time: val.timer,
-        id: key
       });
 
-      val.previous = now;
+      //console.log(counter);
     }
 
+    function init() {
 
-  });
+      $.each(options.fields, function(index, elem) {
+        if ($(elem).length) {
+          var field = new Field(elem);
+          cache[field.selector] = field;
+          counter[field.selector] = 0;
+        }
+      });
 
-  return capsule;
+      setInterval(function() {
+        checkViewport();
+      }, 1000);
 
-}
-
-function prepareReport(data) {
-  return { 
-    id: data.id,
-    campaigns: [
-      { site: '',
-        startdate: '',
-        enddate: '',
-        total: '',
-        sessions: [
-        ]
-      }
-    ],
-
-    total: '',
-
-  }
-
-}
-
-function sendReport() {
-  var report = checkViewport();
-  
-  socket.emit('onscreen', report);
-
-  /*
-  $.each(report.ads, function(key, val) {
-    socket.emit('onscreen', val);
-  });
-  */
-}
-
-function init() {
-  
-  session = new Session();
-  page = new Page();
-
-  $.each(ads, function(index, elem) {
-    if ($(elem).length) {
-      var ad = new Ad(elem);
-      cache[ad.id] = ad;
     }
 
-
-  });
-
-  // Check viewport on pageload
-  var report = checkViewport();
-
-  $(window).on('scroll', throttle(function(){
-    
-    sendReport();
-
-  }, 500));
-
-}
-
-init();
-
-setInterval(function() {
-  sendReport();
-}, 1000);
-
+    init();
 
   };
 
-  
-
-})( jQuery, window, document );
+})(jQuery, window, document);
