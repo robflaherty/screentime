@@ -10,7 +10,8 @@
   var defaults = {
     fields: [],
     buffer: '25%',
-    reportInterval: 3
+    reportInterval: 3,
+    googleAnalytics: true
   };
 
   $.screentime = function(options) {
@@ -18,7 +19,23 @@
 
     var counter = {};
     var cache = {};
+    var log = {};
     var looker = null;
+    var universalGA, classicGA;
+
+
+    if (options.googleAnalytics) {
+
+      if (typeof ga === "function") {
+        universalGA = true;
+      }
+
+      if (typeof _gaq !== "undefined" && typeof _gaq.push === "function") {
+        classicGA = true;
+      }
+
+    }
+
 
     /*
      * Utilities
@@ -105,6 +122,18 @@
      * Do Stuff
      */
 
+    function sendGAEvent(field, time) {
+
+      if (universalGA) {
+        ga('send', 'event', 'Screentime', 'Time on Screen', field, parseInt(time, 10), {'nonInteraction': true});
+      }
+
+      if (classicGA) {
+        _gaq.push(['_trackEvent', 'Screentime', 'Time on Screen', field, parseInt(time, 10), true]);
+      }
+
+    }
+
     function onScreen(viewport, field) {
       var buffer = parseInt(options.buffer.replace('%', ''), 10);
 
@@ -122,12 +151,13 @@
       $.each(cache, function(key, val) {
 
         if (onScreen(viewport, val)) {
+          log[key] += 1;
           counter[key] += 1;
         }
 
       });
 
-      //console.log(counter);
+      console.log(log);
       reporter();
     }
 
@@ -139,11 +169,12 @@
         if (val > 0 && val % options.reportInterval === 0) {
           counter[key] = 0;
           report[key] = val;
+          sendGAEvent(key, val);
         }
       });
 
       if (!$.isEmptyObject(report)) {
-        console.log(report);
+        //console.log(report);
       }
 
     }
@@ -155,6 +186,7 @@
           var field = new Field(elem);
           cache[field.selector] = field;
           counter[field.selector] = 0;
+          log[field.selector] = 0;
         }
       });
 

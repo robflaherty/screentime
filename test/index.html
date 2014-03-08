@@ -3,6 +3,20 @@
 <head>
   <meta charset="utf-8">
   <title>Screentime Test</title>
+ <script>
+  var _gaq = {};
+  _gaq.push = function(data) {
+    console.log("_gaq.push(" + data + ");");
+  };
+
+  var ga = function(params) {
+    var args = Array.prototype.slice.call(arguments, 1);
+    console.log("ga(" + args.join(',') + ");");
+  };
+
+  _gaq = undefined;
+  //ga = undefined;
+  </script>
 </head>
 <body>
   <h1>Screentime Test Page</h1>
