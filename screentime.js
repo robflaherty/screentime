@@ -9,7 +9,8 @@
 
   var defaults = {
     fields: [],
-    buffer: '25%'
+    buffer: '25%',
+    reportInterval: 3
   };
 
   $.screentime = function(options) {
@@ -17,6 +18,7 @@
 
     var counter = {};
     var cache = {};
+    var report = {};
 
     /*
      * Utilities
@@ -111,7 +113,19 @@
 
       });
 
+      console.log(counter);
+      reporter();
+    }
+
+    function reporter() {
       //console.log(counter);
+      $.each(counter, function(key, val) {
+        if (val > 0 && val % options.reportInterval === 0) {
+          counter[key] = 0;
+          console.log(key + ': ' + options.reportInterval);
+        }
+
+      });
     }
 
     function init() {
@@ -121,6 +135,7 @@
           var field = new Field(elem);
           cache[field.selector] = field;
           counter[field.selector] = 0;
+          report[field.selector] = 0;
         }
       });
 

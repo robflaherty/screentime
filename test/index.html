@@ -9,12 +9,13 @@
   <div id="top" style="background: #eee; height: 500px">#top</div>
   <div id="middle" style="background: #ddd; height: 1500px">#middle</div>
   <div id="bottom" style="background: #ccc; height: 500px">#bottom</div>
+  <div id="end" style="background: #bbb; height: 1000px">#bottom</div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script src="../screentime.js"></script>
   <script>
     $.screentime({
-      elements: ['#top', '#middle', '#bottom']
+      fields: ['#top', '#middle', '#bottom']
     });
   </script>
 </body>
