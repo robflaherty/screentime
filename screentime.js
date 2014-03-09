@@ -10,8 +10,9 @@
   var defaults = {
     fields: [],
     buffer: '25%',
-    reportInterval: 3,
-    googleAnalytics: true
+    reportInterval: 5,
+    googleAnalytics: true,
+    callback: function(){}
   };
 
   $.screentime = function(options) {
@@ -157,26 +158,47 @@
 
       });
 
-      console.log(log);
-      reporter();
+      //console.log(log);
     }
 
-    function reporter() {
+    function report() {
 
-      var report = {};
+      var data = {};
+
+      console.log(log);
+      console.log(counter);
 
       $.each(counter, function(key, val) {
-        if (val > 0 && val % options.reportInterval === 0) {
+        if (val > 0) {
+          data[key] = val;
           counter[key] = 0;
-          report[key] = val;
-          sendGAEvent(key, val);
+
+          if (options.googleAnalytics) {
+            sendGAEvent(key, val);
+          }
+
         }
       });
 
-      if (!$.isEmptyObject(report)) {
-        //console.log(report);
+      if (!$.isEmptyObject(data)) {
+        options.callback.call(this, data);
       }
 
+    }
+
+    function startTimers() {
+      looker = setInterval(function() {
+        checkViewport();
+      }, 1000);
+
+      reporter = setInterval(function() {
+        report();
+      }, options.reportInterval * 1000);
+    }
+
+    function stopTimers() {
+      clearInterval(looker);
+      clearInterval(reporter);
     }
 
     function init() {
@@ -190,24 +212,16 @@
         }
       });
 
-      looker = setInterval(function() {
-        checkViewport();
-      }, 1000);
+      startTimers();
 
-      visibly.onHidden(function(){
-        clearInterval(looker);
-        console.log('hidden!');
+      visibly.onHidden(function() {
+        stopTimers();
       });
 
-      visibly.onVisible(function(){
-        clearInterval(looker);
-
-      looker = setInterval(function() {
-        checkViewport();
-      }, 1000);
-        console.log('visible!');
+      visibly.onVisible(function() {
+        stopTimers();
+        startTimers();
       });
-
 
     }
 
