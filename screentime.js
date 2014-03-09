@@ -22,6 +22,7 @@
     var cache = {};
     var log = {};
     var looker = null;
+    var started = false;
     var universalGA, classicGA;
 
     if (options.googleAnalytics) {
@@ -191,6 +192,11 @@
     }
 
     function startTimers() {
+
+      if (!started) {
+        checkViewport();
+        started = true;
+      }
 
       looker = setInterval(function() {
         checkViewport();
