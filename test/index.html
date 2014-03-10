@@ -29,7 +29,17 @@
   <script src="../screentime.js"></script>
   <script>
     $.screentime({
-      fields: ['#top', '#middle', '#bottom'],
+      fields: [
+        { selector: '#top',
+          name: 'Top'
+        },
+        { selector: '#middle',
+          name: 'Middle'
+        },
+        { selector: '#bottom',
+          name: 'Bottom'
+        }
+      ],
       googleAnalytics: false,
       callback: function(data) {
         console.log(data);

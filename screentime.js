@@ -25,6 +25,10 @@
     var started = false;
     var universalGA, classicGA;
 
+    if (!options.fields.length) {
+      return;
+    }
+
     if (options.googleAnalytics) {
 
       if (typeof ga === "function") {
@@ -100,9 +104,10 @@
      * Constructors
      */
 
-    function Field(selector) {
-      this.selector = selector;
-      $elem = this.$elem = $(selector);
+    function Field(elem) {
+      this.selector = elem.selector;
+      $elem = this.$elem = $(elem.selector);
+      this.name = elem.name;
 
       this.top = $elem.offset().top;
       this.height = $elem.height();
@@ -161,7 +166,6 @@
           log[key] += 1;
           counter[key] += 1;
         }
-
       });
 
     }
@@ -169,9 +173,6 @@
     function report() {
 
       var data = {};
-
-      console.log(log);
-      console.log(counter);
 
       $.each(counter, function(key, val) {
         if (val > 0) {
@@ -220,9 +221,9 @@
       $.each(options.fields, function(index, elem) {
         if ($(elem).length) {
           var field = new Field(elem);
-          cache[field.selector] = field;
-          counter[field.selector] = 0;
-          log[field.selector] = 0;
+          cache[field.name] = field;
+          counter[field.name] = 0;
+          log[field.name] = 0;
         }
       });
 
