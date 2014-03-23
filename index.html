@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="./favicon.ico" rel="shortcut icon">
+
+  <title>Screentime - Measure how much time things are on screen for</title>
+
+  <link href="css/normalize.css" rel="stylesheet" />
+  
+
+  <link href='http://fonts.googleapis.com/css?family=Rum+Raisin' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+
+
+  <link href="css/prism.css" rel="stylesheet" />
+  <link href="css/styles.css" rel="stylesheet" />
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-1413210-12', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+</head>
+<body>
+  <!--
+  <div id="pre">
+    You might also like my other Google Analytics plugin, <strong><a href="http://projects.parsnip.io/scroll-depth/">Scroll Depth</a></strong>.
+  </div>
+  -->
+  <div class="wrap">
+  <div id="content">
+  <h1>Screentime</h1>
+  <h2>Measure how much time things are on screen for</h2>
+
+  <p>Screentime is a small tool that helps you start thinking of your website traffic in terms of time instead of hits (pageviews, visits, etc). You can define areas of the page, called Fields, and then Screentime will keep track of how much time each Field is on screen for. You can also use it to track smaller elements, like ad units.
+
+  <p>Screentime only handles the client side work. You'll need to provide your own backend to post the data to. I've included an example that shows how to this with Keen IO using only a few lines of code. There's also a built-in option for posting to Google Analytics but there are some caveats (see below).</p>
+
+  <p class="buttons">
+    <a href="https://github.com/robflaherty/screentime/blob/master/screentime.js" target="_blank" class="button button-download">Download the JS</a>
+    <a href="https://github.com/robflaherty/screentime" target="_blank" class="button">View on Github</a>
+  </p>
+
+  <h2>How it works</h2>
+  <p>You specify some DOM elements that you want to track and then every second Screentime checks the viewport to see which ones are in view. It tracks the viewable seconds for each element/field and then issues a report every 10 seconds (you can adjust the interval). The report is passed to a callback function that you can use to post the data to your server.</p>
+
+  <p>If the user switches tabs, the timer stops. The timer doesn't require that the user be active, just that the screen elements are visible.</p>
+
+
+  <h2>Using it</h2>
+  <p>Load jQuery, load screentime.js, and pass in selectors for each unique element you want to track, including a name for each. The callback option receives an object containing the data.</p>
+
+<pre><code class="language-javascript">&lt;script src="screentime.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+$.screentime({
+  fields: [
+    { selector: '#top',
+      name: 'Top'
+    },
+    { selector: '#middle',
+      name: 'Middle'
+    },
+    { selector: '#bottom',
+      name: 'Bottom'
+    }
+  ],
+  callback: function(data) {
+    console.log(data);
+    // Logs: { Top: 5, Middle: 3 }
+  }
+});
+&lt;/script&gt;</code>
+</pre>
+
+<h2>Options</h2>
+
+<h3><code>fields</code> (array)</h3>
+<p>An array of object listing the DOM elements you want to track. Each object should specify a <code>selector</code> property and a <code>name</code> property. Required.</p>
+
+<h3><code>reportInterval</code> (number)</h3>
+<p>The interval, in seconds, used to issue a report. The default is 10 seconds.</p>
+
+<h3><code>buffer</code> (string)</h3>
+<p>This determines what percentage of the field must be on screen for it to be considered in view. The default is "25%". One exception to this rule: if a field occupies the entire viewport it will be considred in view regardless of its viewable percentage.</p>
+
+<h3><code>googleAnalytics</code> (boolean)</h3>
+<p>Setting this to true (default is false) will send a Google Analytics event for each field (if the field has data to report) when the report is issued.</p>
+
+<h3><code>callback</code> (function)</h3>
+<p>The callback function that receives the screentime data.</p>
+
+<h2>Posting the data</h2>
+<p>The built-in Google Analytics option is an easy way to quickly start collecting screentime data, but it's not exactly scalable. For each field that has data to report, a separate GA Event has to be sent. If you're only tracking 2 or 3 fields, this is probably fine. But anything more than that and you might start hitting the GA collection limit.</p>
+
+<p>For scalabla data collection you'll want to provide your own backend or use a service like <a href="https://keen.io/" target="_blank">Keen IO</a>. In the examples folder there's a demo showing how easy it is to use Keen for this. It's as simple as this:</p>
+
+
+<pre><code class="language-javascript">...
+callback: function(data) {
+  Keen.addEvent("screentime", data);        
+}
+...</code></pre>
+
+<h2>Browser Support</h2>
+
+<p>All the good browsers and IE8+</p>
+
+</div>
+</div>
+<div id="bottom">
+<div class="inner">
+
+  <h2>Contact</h2>
+
+  <p>
+    <a href="https://twitter.com/robflaherty" target="_blank" class="button button-twitter">@robflaherty</a>
+    <a href="http://parsnip.io" class="button">parsnip.io</a>
+  </p>
+
+
+  <h2>License</h2>
+
+  <p style="margin: 0;">Licensed under the MIT license.</p>
+
+</div>
+</div>
+<script src="js/prism.js"></script>
+</body>
+</html>
