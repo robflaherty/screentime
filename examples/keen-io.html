@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Screentime Example - Keen IO</title>
+ <script>
+    var Keen=Keen||{configure:function(e){this._cf=e},addEvent:function(e,t,n,i){this._eq=this._eq||[],this._eq.push([e,t,n,i])},setGlobalProperties:function(e){this._gp=e},onChartsReady:function(e){this._ocrq=this._ocrq||[],this._ocrq.push(e)}};(function(){var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src=("https:"==document.location.protocol?"https://":"http://")+"dc8na2hxrj29i.cloudfront.net/code/keen-2.1.0-min.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();
+
+    // Configure the Keen object with your Project ID and (optional) access keys.
+    Keen.configure({
+      projectId: "532ef9ac00111c0925000002",
+      writeKey: "e11603cd2ff643cd807233521d0d6ec70bebf76626d0e84302a2c1e1741aee64b6531abe39b5e9d023987bce24b6f159aea0b3a5d1e818100bc74a941834987ca05707d03e20acb8303759df0011caf1a1cecd19bfe75812d30c5495971c3a6a345796d040bf1bf73ca944515364aef4"
+    });
+
+  </script>
+</head>
+<body>
+  <h1>Screentime Test Page</h1>
+  <div id="top" style="background: #eee; height: 500px">#top</div>
+  <div id="middle" style="background: #ddd; height: 300px">#middle</div>
+  <div id="bottom" style="background: #ccc; height: 1000px">#bottom</div>
+  <div id="end" style="background: #bbb; height: 1000px">#end</div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="../screentime.js"></script>
+  <script>
+    $.screentime({
+      fields: [
+        { selector: '#top',
+          name: 'Top'
+        },
+        { selector: '#middle',
+          name: 'Middle'
+        },
+        { selector: '#bottom',
+          name: 'Bottom'
+        }
+      ],
+      callback: function(data) {
+        Keen.addEvent("screentime", data);        
+      }
+    });
+  </script>
+</body>
+</html>
