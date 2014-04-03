@@ -122,6 +122,27 @@ a:hover {
   text-align: center;
   font-size: 16px; }
 
+#console {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #000;
+  padding: 10px;
+  color: #fff;
+  opacity: 0.9;
+  z-index: 10000000;
+  font-size: 16px; }
+  #console ul {
+    text-align: center;
+    margin: 0;
+    padding: 0; }
+  #console li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    margin: 0 20px 0 0; }
+
 /* Hide the scroll marks on smaller screens */
 @media only screen and (max-width: 549px) {
   .wrap {

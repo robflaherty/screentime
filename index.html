@@ -31,13 +31,17 @@
 
 </head>
 <body>
-  <!--
-  <div id="pre">
-    You might also like my other Google Analytics plugin, <strong><a href="http://projects.parsnip.io/scroll-depth/">Scroll Depth</a></strong>.
+  <div id="console">
+    <ul>
+      <li data-time="0" data-field="Top">Intro: <span>0</span>s</li>
+      <li data-time="0" data-field="Middle">Main: <span>0</span>s</li>
+      <li data-time="0" data-field="Bottom">Bottom: <span>0</span>s</li>
+    </ul>
   </div>
-  -->
+
   <div class="wrap">
   <div id="content">
+  <div id="top">
   <h1>Screentime</h1>
   <h2>Measure how much time things are on screen for</h2>
 
@@ -49,6 +53,9 @@
     <a href="https://github.com/robflaherty/screentime/blob/master/screentime.js" target="_blank" class="button button-download">Download the JS</a>
     <a href="https://github.com/robflaherty/screentime" target="_blank" class="button">View on Github</a>
   </p>
+
+</div>
+<div id="middle">
 
   <h2>How it works</h2>
   <p>You specify some DOM elements that you want to track and then every second Screentime checks the viewport to see which ones are in view. It tracks the viewable seconds for each element/field and then issues a report every 10 seconds (you can adjust the interval). The report is passed to a callback function that you can use to post the data to your server.</p>
@@ -110,6 +117,8 @@ callback: function(data) {
 }
 ...</code></pre>
 
+</div>
+
 <h2>Browser Support</h2>
 
 <p>All the good browsers and IE8+</p>
@@ -133,6 +142,38 @@ callback: function(data) {
 
 </div>
 </div>
+<script src="js/jquery-1.10.2.js"></script>
 <script src="js/prism.js"></script>
+<script src="js/screentime.js"></script>
+
+<script>
+$.screentime({
+  fields: [
+    { selector: '#top',
+      name: 'Top'
+    },
+    { selector: '#middle',
+      name: 'Middle'
+    },
+    { selector: '#bottom',
+      name: 'Bottom'
+    }
+  ],
+  reportInterval: 1,
+  callback: function(data) {
+    $.each(data, function(key, val) {
+      
+      var $elem = $('#console li[data-field="' + key + '"]');
+      var current = parseInt($elem.data('time'), 10);
+
+      $elem.data('time', current + val);
+      $elem.find('span').html(current += val);
+
+
+    });
+  }
+});
+</script>
+
 </body>
 </html>
