@@ -9,7 +9,7 @@
   <title>Screentime - Measure how much time things are on screen for</title>
 
   <link href="css/normalize.css" rel="stylesheet" />
-  
+
 
   <link href='http://fonts.googleapis.com/css?family=Rum+Raisin' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
@@ -41,7 +41,8 @@
 
   <div class="wrap">
   <div id="content">
-  <div id="top">
+  <div id="top" class="field">
+  <p class="field-label">Intro</p>
   <h1>Screentime</h1>
   <h2>Measure how much time things are on screen for</h2>
 
@@ -55,8 +56,8 @@
   </p>
 
 </div>
-<div id="middle">
-
+<div id="middle" class="field">
+  <p class="field-label">Main</p>
   <h2>How it works</h2>
   <p>You specify some DOM elements that you want to track and then every second Screentime checks the viewport to see which ones are in view. It tracks the viewable seconds for each element/field and then issues a report every 10 seconds (you can adjust the interval). The report is passed to a callback function that you can use to post the data to your server.</p>
 
@@ -113,26 +114,25 @@ $.screentime({
 
 <pre><code class="language-javascript">...
 callback: function(data) {
-  Keen.addEvent("screentime", data);        
+  Keen.addEvent("screentime", data);
 }
 ...</code></pre>
 
 </div>
 
+<div id="bottom" class="field">
+  <p class="field-label">Bottom</p>
+
 <h2>Browser Support</h2>
 
 <p>All the good browsers and IE8+</p>
 
-</div>
-</div>
-<div id="bottom">
-<div class="inner">
+
 
   <h2>Contact</h2>
 
   <p>
     <a href="https://twitter.com/robflaherty" target="_blank" class="button button-twitter">@robflaherty</a>
-    <a href="http://parsnip.io" class="button">parsnip.io</a>
   </p>
 
 
@@ -141,6 +141,8 @@ callback: function(data) {
   <p style="margin: 0;">Licensed under the MIT license.</p>
 
 </div>
+</div>
+
 </div>
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/prism.js"></script>
@@ -162,14 +164,11 @@ $.screentime({
   reportInterval: 1,
   callback: function(data) {
     $.each(data, function(key, val) {
-      
       var $elem = $('#console li[data-field="' + key + '"]');
       var current = parseInt($elem.data('time'), 10);
 
       $elem.data('time', current + val);
       $elem.find('span').html(current += val);
-
-
     });
   }
 });

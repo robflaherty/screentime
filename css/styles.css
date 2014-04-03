@@ -16,27 +16,33 @@ body {
   font-family: "lucida grande", sans-serif;
   font-size: 20px;
   line-height: 1.5;
-  color: #444444;
+  color: #b9ffef;
   position: relative;
-  background-color: #f0e4d6; }
+  background-color: #007d48; }
 
 #content, .inner {
   max-width: 600px;
   margin: 0 auto;
-  padding-top: 50px;
+  padding-top: 70px;
   position: relative; }
 
 .inner {
   padding: 0; }
 
+.field {
+  padding: 20px;
+  margin: 0 0 20px;
+  background: #006339;
+  border-radius: 0px;
+  position: relative; }
+
 h1 {
-  font-family: 'Rum Raisin', sans-serif;
-  font-size: 124px;
+  font-family: sans-serif;
+  font-size: 72px;
   text-align: center;
   margin: 0 0 20px;
   line-height: 1;
-  color: #135432;
-  letter-spacing: 3px; }
+  color: white; }
 
 h2 {
   font-family: 'Roboto Condensed', sans-serif;
@@ -44,7 +50,7 @@ h2 {
   text-align: center;
   line-height: 1.3;
   margin: 0 0 30px;
-  color: #0034bd;
+  color: white;
   font-weight: normal; }
 
 h3 {
@@ -65,13 +71,21 @@ img {
 .img2 {
   border-radius: 80% 60%; }
 
+.field-label {
+  position: absolute;
+  right: 0px;
+  top: 0;
+  padding: 5px;
+  font-size: 14px;
+  background: #004a2a; }
+
 pre, pre[class*="language-"] {
   font-size: 14px;
   margin: 0 0 30px;
   display: block; }
 
 a {
-  color: #444444;
+  color: #b9ffef;
   text-decoration: underline; }
 
 a:hover {
@@ -84,7 +98,7 @@ a:hover {
 .button {
   display: inline-block;
   border-radius: 5px;
-  border: 2px solid #444444;
+  border: 2px solid #b9ffef;
   text-decoration: none;
   padding: 10px 20px;
   margin: 0 auto;
@@ -98,23 +112,23 @@ a:hover {
   /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */ }
 
 .button-download {
-  margin: 0 20px 0 0;
-  background: #c02a2a; }
+  margin: 0 20px 0 0; }
 
 .button-twitter {
   margin: 0 20px 0 0; }
 
 .button:hover {
-  background: #962121; }
+  background: #00492a; }
 
 .github {
   text-align: center; }
 
-#bottom {
-  background: #0e2144;
-  padding: 30px 0; }
-  #bottom p {
-    text-align: center; }
+#bottom p {
+  text-align: center; }
+#bottom .button {
+  display: inline-block;
+  margin: 0 0 20px;
+  clear: both; }
 
 #pre {
   background: #0e2144;
@@ -126,7 +140,7 @@ a:hover {
   position: fixed;
   top: 0;
   width: 100%;
-  background: #000;
+  background: black;
   padding: 10px;
   color: #fff;
   opacity: 0.9;
