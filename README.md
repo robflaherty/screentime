@@ -1,9 +1,11 @@
 Screentime
 ==========
 
-Screentime is a small tool that helps you start thinking of your website traffic in terms of time instead of hits (Pageviews, visits, etc). You can define areas of the page, called Fields, and then Screentime will keep track of how much time each Field is on screen for. You can also use it to track smaller elements, like ad units.
+[Screentime](http://screentime.parsnip.io/) is a small tool that helps you start thinking of your website traffic in terms of time instead of hits (Pageviews, visits, etc). You can define areas of the page, called Fields, and then Screentime will keep track of how much time each Field is on screen for. You can also use it to track smaller elements, like ad units.
 
 Screentime only handles the client side work. You'll need to provide your own backend to post the data to. I've included an example that shows how to this with [Keen IO](https://keen.io/) using only a few lines of code. There's also a built-in option for posting to Google Analytics but there are some caveats (see below).
+
+[**View the Project Page**](http://screentime.parsnip.io/)
 
 ## How it works
 You specify some DOM elements that you want to track and then every second Screentime checks the viewport to see which ones are in view. It tracks the viewable seconds for each element/field and then issues a report every 10 seconds (you can adjust the interval). The report is passed to a callback function that you can use to post the data to your server.
