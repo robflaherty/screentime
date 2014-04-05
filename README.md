@@ -40,8 +40,8 @@ An array of object listing the DOM elements you want to track. Each object shoul
 #### `reportInterval` number
 The interval, in seconds, used to issue a report. The default is 10 seconds.
 
-#### `buffer` string
-This determines what percentage of the field must be on screen for it to be considered in view. The default is `25%`. One exception to this rule: if a field occupies the entire viewport it will be considred in view regardless of its viewable percentage.
+#### `percentOnScreen` string
+This determines what percentage of the field must be on screen for it to be considered in view. The default is `50%`. One exception to this rule: if a field occupies the majority of the viewport it will be considered in view regardless of its viewable percentage.
 
 #### `googleAnalytics` boolean
 Setting this to true (default is false) will send a Google Analytics event for each field (if the field has data to report) when the report is issued.
