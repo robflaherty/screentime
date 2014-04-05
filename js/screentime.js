@@ -9,7 +9,7 @@
 
   var defaults = {
     fields: [],
-    buffer: '25%',
+    buffer: '50%',
     reportInterval: 10,
     googleAnalytics: false,
     callback: function(){}
@@ -17,6 +17,9 @@
 
   $.screentime = function(options) {
     options = $.extend({}, defaults, options);
+
+    // Convert buffer to number
+    options.buffer = parseInt(options.buffer.replace('%', ''), 10);
 
     var counter = {};
     var cache = {};
@@ -106,20 +109,29 @@
     }
 
     function onScreen(viewport, field) {
-
-      var buffer = parseInt(options.buffer.replace('%', ''), 10);
-      var buffered = (field.height * (buffer/100));
+      var cond, buffered, partialView;
 
       // Field entirely within viewport
-      var cond1 = (field.bottom <= viewport.bottom) && (field.top >= viewport.top);
+      if ((field.bottom <= viewport.bottom) && (field.top >= viewport.top)) {
+        return true;
+      }
 
-      // Field bigger than viewport
-      var cond2 = (field.height > viewport.height && field.top <= viewport.top && field.bottom >= viewport.bottom);
+       // Field bigger than viewport
+      if (field.height > viewport.height) {
 
-      // Partial view
-      var cond3 = ( (viewport.bottom - buffered) >= field.top && (field.bottom - buffered) > viewport.top);
+        cond = (viewport.bottom - field.top) > (viewport.height / 2) && (field.bottom - viewport.top) > (viewport.height / 2);
 
-      return ( cond1 || cond2 || cond3 );
+        if (cond) {
+          return true;
+        }
+
+      }
+
+      // Partially in view
+      buffered = (field.height * (options.buffer/100));
+      partialView = ((viewport.bottom - buffered) >= field.top && (field.bottom - buffered) > viewport.top);
+
+      return partialView;
 
     }
 
