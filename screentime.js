@@ -18,6 +18,9 @@
   $.screentime = function(options) {
     options = $.extend({}, defaults, options);
 
+    // Convert buffer to number
+    options.buffer = parseInt(options.buffer.replace('%', ''), 10);
+
     var counter = {};
     var cache = {};
     var log = {};
@@ -106,20 +109,30 @@
     }
 
     function onScreen(viewport, field) {
-
-      var buffer = parseInt(options.buffer.replace('%', ''), 10);
-      var buffered = (field.height * (buffer/100));
+      var buffered, partialView;
 
       // Field entirely within viewport
-      var cond1 = (field.bottom <= viewport.bottom) && (field.top >= viewport.top);
+      if ((field.bottom <= viewport.bottom) && (field.top >= viewport.top)) {
+        return true;
+      }
 
-      // Field bigger than viewport
-      var cond2 = (field.height > viewport.height && field.top <= viewport.top && field.bottom >= viewport.bottom);
+       // Field bigger than viewport
+      if (field.height > viewport.height) {
 
-      // Partial view
-      var cond3 = ( (viewport.bottom - buffered) >= field.top && (field.bottom - buffered) > viewport.top);
+        // Field occupies entire viewport
+        if (field.top <= viewport.top && field.bottom >= viewport.bottom) {
+          return true;
+        }
 
-      return ( cond1 || cond2 || cond3 );
+
+
+      }
+
+      // Partially in view
+      buffered = (field.height * (options.buffer/100));
+      partialView = ((viewport.bottom - buffered) >= field.top && (field.bottom - buffered) > viewport.top);
+
+      return partialView;
 
     }
 
