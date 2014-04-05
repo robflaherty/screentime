@@ -9,7 +9,7 @@
 
   var defaults = {
     fields: [],
-    buffer: '25%',
+    buffer: '50%',
     reportInterval: 10,
     googleAnalytics: false,
     callback: function(){}
