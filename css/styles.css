@@ -159,6 +159,8 @@ a:hover {
     padding: 0;
     display: inline-block;
     margin: 0 20px 0 0; }
+    #console li:last-child {
+      margin: 0; }
   #console span {
     font-weight: bold; }
 
@@ -193,4 +195,7 @@ a:hover {
     font-size: 26px; }
 
   p, ul {
-    font-size: 18px; } }
+    font-size: 18px; }
+
+  #console li {
+    font-size: 16px; } }
