@@ -6,10 +6,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link href="./favicon.ico" rel="shortcut icon">
 
-  <title>Screentime - Measure how much time things are on screen for</title>
+  <title>Screentime - Measure how much time things spend on-screen</title>
 
   <link href="css/normalize.css" rel="stylesheet" />
-
 
   <link href='http://fonts.googleapis.com/css?family=Rum+Raisin' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
@@ -44,7 +43,7 @@
   <div id="top" class="field">
   <p class="field-label">Intro</p>
   <h1>Screentime</h1>
-  <h2>Measure how much time things are on screen for</h2>
+  <h2>Measure how much time things spend on-screen</h2>
 
   <p>Screentime is a small tool that helps you start thinking of your website traffic in terms of time instead of hits (pageviews, visits, etc). You can define areas of the page, called Fields, and then Screentime will keep track of how much time each Field is on screen for. You can also use it to track smaller elements, like ad units.
 
@@ -97,8 +96,8 @@ $.screentime({
 <h3><code>reportInterval</code> (number)</h3>
 <p>The interval, in seconds, used to issue a report. The default is 10 seconds.</p>
 
-<h3><code>buffer</code> (string)</h3>
-<p>This determines what percentage of the field must be on screen for it to be considered in view. The default is "25%". One exception to this rule: if a field occupies the entire viewport it will be considred in view regardless of its viewable percentage.</p>
+<h3><code>percentOnScreen</code> (string)</h3>
+<p>This determines what percentage of the field must be on screen for it to be considered in view. The default is "50%". One exception to this rule: if a field occupies the majority of the viewport it will be considered in-view regardless of its viewable percentage.</p>
 
 <h3><code>googleAnalytics</code> (boolean)</h3>
 <p>Setting this to true (default is false) will send a Google Analytics event for each field (if the field has data to report) when the report is issued.</p>
@@ -109,7 +108,7 @@ $.screentime({
 <h2>Posting the data</h2>
 <p>The built-in Google Analytics option is an easy way to quickly start collecting screentime data, but it's not exactly scalable. For each field that has data to report, a separate GA Event has to be sent. If you're only tracking 2 or 3 fields, this is probably fine. But anything more than that and you might start hitting the GA collection limit.</p>
 
-<p>For scalabla data collection you'll want to provide your own backend or use a service like <a href="https://keen.io/" target="_blank">Keen IO</a>. In the examples folder there's a demo showing how easy it is to use Keen for this. It's as simple as this:</p>
+<p>For scalable data collection you'll want to provide your own backend or use a service like <a href="https://keen.io/" target="_blank">Keen IO</a>. In the examples folder there's a demo showing how easy it is to use Keen for this. It's as simple as this:</p>
 
 
 <pre><code class="language-javascript">...
