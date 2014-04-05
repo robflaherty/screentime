@@ -109,7 +109,7 @@
     }
 
     function onScreen(viewport, field) {
-      var buffered, partialView;
+      var cond, buffered, partialView;
 
       // Field entirely within viewport
       if ((field.bottom <= viewport.bottom) && (field.top >= viewport.top)) {
@@ -119,12 +119,11 @@
        // Field bigger than viewport
       if (field.height > viewport.height) {
 
-        // Field occupies entire viewport
-        if (field.top <= viewport.top && field.bottom >= viewport.bottom) {
+        cond = (viewport.bottom - field.top) > (viewport.height / 2) && (field.bottom - viewport.top) > (viewport.height / 2);
+
+        if (cond) {
           return true;
         }
-
-
 
       }
 
