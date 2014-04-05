@@ -9,7 +9,7 @@
 
   var defaults = {
     fields: [],
-    buffer: '50%',
+    percentOnScreen: '50%',
     reportInterval: 10,
     googleAnalytics: false,
     callback: function(){}
@@ -18,8 +18,8 @@
   $.screentime = function(options) {
     options = $.extend({}, defaults, options);
 
-    // Convert buffer to number
-    options.buffer = parseInt(options.buffer.replace('%', ''), 10);
+    // Convert perecent string to number
+    options.percentOnScreen = parseInt(options.percentOnScreen.replace('%', ''), 10);
 
     var counter = {};
     var cache = {};
@@ -128,7 +128,7 @@
       }
 
       // Partially in view
-      buffered = (field.height * (options.buffer/100));
+      buffered = (field.height * (options.percentOnScreen/100));
       partialView = ((viewport.bottom - buffered) >= field.top && (field.bottom - buffered) > viewport.top);
 
       return partialView;
