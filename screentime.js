@@ -196,7 +196,7 @@
     function init() {
 
       $.each(options.fields, function(index, elem) {
-        if ($(elem).length) {
+        if ($(elem.selector).length) {
           var field = new Field(elem);
           cache[field.name] = field;
           counter[field.name] = 0;
