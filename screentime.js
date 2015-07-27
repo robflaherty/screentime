@@ -164,7 +164,7 @@
       });
 
       if (!$.isEmptyObject(data)) {
-        options.callback.call(this, data);
+        options.callback.call(this, data, log);
       }
 
     }
@@ -187,10 +187,19 @@
     }
 
     function stopTimers() {
-
       clearInterval(looker);
       clearInterval(reporter);
+    }
 
+    $.screentime.reset = function() {
+      stopTimers();
+
+      $.each(cache, function(key, val) {
+        log[key] = 0;
+        counter[key] = 0;
+      });
+
+      startTimers();
     }
 
     function init() {

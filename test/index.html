@@ -24,8 +24,7 @@
   <div id="middle" style="background: #ddd; height: 300px">#middle</div>
   <div id="bottom" style="background: #ccc; height: 1000px">#bottom</div>
   <div id="end" style="background: #bbb; height: 1000px">#end</div>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="../screentime.js"></script>
   <script>
     $.screentime({
@@ -46,8 +45,9 @@
       ],
       reportInterval: 3,
       googleAnalytics: false,
-      callback: function(data) {
+      callback: function(data, log) {
         console.log(data);
+        console.log(log);
       }
     });
   </script>
