@@ -53,6 +53,8 @@
     <a href="https://github.com/robflaherty/screentime" target="_blank" class="button">View on Github</a>
   </p>
 
+  <p style="text-align: center; font-size: 16px; ">(You may also like my other analytics plugins, <strong><a href="http://riveted.parsnip.io">Riveted</a></strong> and <strong><a href="http://scrolldepth.parsnip.io">Scroll Depth</a></strong>.)
+
 </div>
 <div id="middle" class="field">
   <p class="field-label">Main</p>
@@ -103,6 +105,10 @@ $.screentime({
 
 <h3><code>callback</code> (function)</h3>
 <p>The callback function that receives the screentime data.</p>
+
+<h2>Methods</h2>
+<h3><code>reset()</code></h3>
+<p>Calling <code>$.screentime.reset()</code> will reset the counter. This is useful for Single Page Applications where the page context is reloaded client side.</p>
 
 <h2>Posting the data</h2>
 <p>The built-in Google Analytics option is an easy way to quickly start collecting screentime data, but it's not exactly scalable. For each field that has data to report, a separate GA Event has to be sent. If you're only tracking 2 or 3 fields, this is probably fine. But anything more than that and you might start hitting the GA collection limit.</p>
