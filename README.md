@@ -51,6 +51,10 @@ Setting this to true (default is false) will send a Google Analytics event for e
 #### `callback` function
 The callback function that receives the screentime data.
 
+## Methods
+#### `reset`
+Calling `$.screentime.reset()` will reset the counter. This is useful for Single Page Applications where the page context is reloaded client side.
+
 ## Posting the data
 The built-in Google Analytics option is an easy way to quickly start collecting screentime data, but it's not exactly scalable. For each field that has data to report, a separate GA Event has to be sent. If you're only tracking 2 or 3 fields, this is probably fine. But anything more than that and you might start hitting the [GA collection limit](https://developers.google.com/analytics/devguides/collection/gajs/limits-quotas).
 
