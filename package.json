@@ -1,0 +1,31 @@
+{
+  "name": "screentime",
+  "version": "1.0.0",
+  "description": "Screentime ==========",
+  "main": "screentime.js",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petemill/screentime.git"
+  },
+  "keywords": [
+    "analytics",
+    "elements",
+    "time"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/petemill/screentime/issues"
+  },
+  "homepage": "https://github.com/petemill/screentime#readme",
+  "dependencies": {
+    "jquery": "^2.2.3"
+  }
+}
