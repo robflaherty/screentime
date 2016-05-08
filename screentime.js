@@ -1,11 +1,26 @@
 /*!
  * @preserve
- * Screentime.js | v0.2
- * Copyright (c) 2015 Rob Flaherty (@robflaherty)
+ * Screentime.js | v0.2.0
+ * Copyright (c) 2016 Rob Flaherty (@robflaherty)
  * Licensed under the MIT and GPL licenses.
  */
 
-(function($, window, document) {
+/* Universal module definition */
+
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD
+    define(['jquery'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    // CommonJS
+    module.exports = factory(require('jquery'));
+  } else {
+    // Browser globals
+    factory(jQuery);
+  }
+}(function($) {
+
+  /* Screentime */
 
   var defaults = {
     fields: [],
@@ -230,4 +245,4 @@
 
   };
 
-})(jQuery, window, document);
+}));

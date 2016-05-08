@@ -1,0 +1,31 @@
+{
+  "name": "screentime",
+  "version": "0.2.0",
+  "description": "An analytics plugin to measure how much time elements spend on-screen.",
+  "main": "screentime.js",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robflaherty/screentime.git"
+  },
+  "keywords": [
+    "analytics",
+    "google analytics",
+    "time"
+  ],
+  "author": "Rob Flaherty",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/robflaherty/screentime/issues"
+  },
+  "homepage": "http://screentime.parsnip.io/",
+  "dependencies": {
+    "jquery": ">=1.8"
+  }
+}
