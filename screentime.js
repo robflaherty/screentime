@@ -1,31 +1,26 @@
 /*!
  * @preserve
- * Screentime.js | v0.2
- * Copyright (c) 2015 Rob Flaherty (@robflaherty)
+ * Screentime.js | v0.2.0
+ * Copyright (c) 2016 Rob Flaherty (@robflaherty)
  * Licensed under the MIT and GPL licenses.
  */
- /* Universal module definition */
 
- (function(factory) {
+/* Universal module definition */
 
-   //attempt to get global reference to jQuery
-     //if it's available, we shouldn't ask for the reference from elsewhere
-     var jQueryRef;
-     if (window && window.jQuery) {
-       jQueryRef = window.jQuery;
-     }
-     //either call this module's factory or return the output
-     if (!jQueryRef && typeof define === 'function' && define.amd) {
-       // AMD
-       define(['jquery'], factory);
-     } else if (typeof module === 'object' && module.exports) {
-       // CommonJS, use global jQuery ref or load from module
-       module.exports = factory(jQueryRef || require('jquery'));
-     } else {
-       // Browser globals
-       factory(jQuery);
-     }
- }(function($) {
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD
+    define(['jquery'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    // CommonJS
+    module.exports = factory(require('jquery'));
+  } else {
+    // Browser globals
+    factory(jQuery);
+  }
+}(function($) {
+
+  /* Screentime */
 
   var defaults = {
     fields: [],
