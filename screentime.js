@@ -96,6 +96,8 @@
       this.height = $elem.height();
       this.bottom = this.top + this.height;
       this.width = $elem.width();
+      
+      this.percentOnScreen = elem.percentOnScreen === undefined ? options.percentOnScreen : elem.percentOnScreen;
     }
 
     function Viewport() {
@@ -143,7 +145,7 @@
       }
 
       // Partially in view
-      buffered = (field.height * (options.percentOnScreen/100));
+      buffered = (field.height * (field.percentOnScreen/100));
       partialView = ((viewport.bottom - buffered) >= field.top && (field.bottom - buffered) > viewport.top);
 
       return partialView;
