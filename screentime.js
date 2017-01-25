@@ -245,4 +245,7 @@
 
   };
 
+  // UMD export
+  return $.screentime;
+
 }));
