@@ -154,7 +154,7 @@
       var viewport = new Viewport();
 
       $.each(cache, function(key, val) {
-        if (onScreen(viewport, val)) {
+        if ( (onScreen(viewport, val)) && ($(val.selector).is(':visible')) ) {
           log[key] += 1;
           counter[key] += 1;
         }
