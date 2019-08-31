@@ -126,6 +126,11 @@
     function onScreen(viewport, field) {
       var cond, buffered, partialView;
 
+      // Field not hidden by design
+      if($(field.selector).is(':hidden') ){
+        return false;
+      }
+      
       // Field entirely within viewport
       if ((field.bottom <= viewport.bottom) && (field.top >= viewport.top)) {
         return true;
@@ -154,7 +159,7 @@
       var viewport = new Viewport();
 
       $.each(cache, function(key, val) {
-        if ( (onScreen(viewport, val)) && ($(val.selector).is(':visible')) ) {
+        if (onScreen(viewport, val)) {
           log[key] += 1;
           counter[key] += 1;
         }
