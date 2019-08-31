@@ -126,6 +126,11 @@
     function onScreen(viewport, field) {
       var cond, buffered, partialView;
 
+      // Field not hidden by design
+      if($(field.selector).is(':hidden') ){
+        return false;
+      }
+      
       // Field entirely within viewport
       if ((field.bottom <= viewport.bottom) && (field.top >= viewport.top)) {
         return true;
